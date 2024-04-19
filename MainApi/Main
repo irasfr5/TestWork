@@ -1,0 +1,34 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.Web.Mvc;
+using System.Timers;
+
+
+public class Program
+{
+    public class MyBackgroundService : BackgroundService
+    {
+        private readonly ILogger<MyBackgroundService> _logger;
+
+        public MyBackgroundService(ILogger<MyBackgroundService> logger)
+        {
+            _logger = logger;
+        }
+
+        protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Background task is running");
+                await Task.Delay(TimeSpan.FromMinutes(5), stoppingToken);
+            }
+        }
+    }
+
+    public void ConfigureServices(IServiceCollection services) => services.AddHostedService<MyBackgroundService>();
+
+    
+}
