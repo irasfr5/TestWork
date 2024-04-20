@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Web.Mvc;
 
 
-namespase Notes.WebApi.Controllers
+namespase User.WebApi.Controllers
 {
     
     public class UserController : BaseController
@@ -47,8 +47,31 @@ namespase Notes.WebApi.Controllers
 
             _userRepository.CreateUser(user);
             return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<string>>  Get () //получение данных с сервера
+        {
+            var query = new userRepository;
+            {
+                UserId = UserId
+            }
+            var vm = await Mediator.Send(query);
+            return Ok(vm);
+        }
+
+        [HttpGet]
+        public void Post ()  // отправка на сервер
+        {
+            global::System.Object value = users.Add(user);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<User>> Delete () //удаление данных с сервера 
+        {
 
         }
+
     }
 
 }
