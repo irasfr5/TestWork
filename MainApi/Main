@@ -30,5 +30,38 @@ public class Program
 
     public void ConfigureServices(IServiceCollection services) => services.AddHostedService<MyBackgroundService>();
 
+    public class PaymentProcessor
+    {
+        private PaymentService paymentService;
+
+        public PaymentProcessor()
+        {
+            paymentService = new PaymentService();
+        }
+
+        public string MakePayment()
+        {
+            bool paymentProcessed = false;
+        
+            while (!paymentProcessed)
+            {
+                Console.WriteLine("Payment is in progress...");
+                Thread.Sleep(20000); 
+                paymentProcessed = paymentService.ProcessPayment();
+            }
+
+            return "Payment has been processed successfully.";
+        }
+    }
     
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        PaymentProcessor paymentProcessor = new PaymentProcessor();
+        string paymentStatus = paymentProcessor.MakePayment();
+        Console.WriteLine(paymentStatus); // Return payment status to the client
+    }
 }
