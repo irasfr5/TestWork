@@ -62,6 +62,6 @@ public class Program
     {
         PaymentProcessor paymentProcessor = new PaymentProcessor();
         string paymentStatus = paymentProcessor.MakePayment();
-        Console.WriteLine(paymentStatus); // Return payment status to the client
+        Console.WriteLine(paymentStatus); 
     }
 }
